@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "rp_mod",
+  "version": "${version}",
+  "name": "RPMod",
+  "description": "Mod that allows player to use commands for roleplaying",
+  "authors": [
+    "Jepsiko"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/RPMod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "rpmod.rpmod.client.RPModClient"
+    ],
+    "main": [
+      "rpmod.rpmod.RPMod"
+    ]
+  },
+  "mixins": [
+    "RPMod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
