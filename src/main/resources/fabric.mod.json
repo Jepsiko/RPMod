@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "rp_mod",
+  "id": "rpmod",
   "version": "${version}",
   "name": "RPMod",
   "description": "Mod that allows player to use commands for roleplaying",
