@@ -1,6 +1,6 @@
-#RPMod - Roleplaying Mod for Minecraft
+# RPMod - Roleplaying Mod for Minecraft
 
-##How to use
+## How to use
 
 All variables between brackets are strings and should be surrounded by quotes
 `""` if they contain spaces.
@@ -16,13 +16,13 @@ your username if you don't have a roleplaying name.
 Ex: `/rp action "turns around` will show `*YOUR_RP_NAME turns around*`.
 
 
-`/rp set_name [RP_NAME]` changes your roleplaying name.
+`/rp name set [RP_NAME]` changes your roleplaying name.
 
 
-`/rp get_name` shows you your current roleplaying name.
+`/rp name get` shows you your current roleplaying name.
 
 
-`/rp clear_name` removes your current roleplaying name.
+`/rp name clear` removes your current roleplaying name.
 
 
 `/rp show_name_table` shows you all username and corresponding

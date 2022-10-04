@@ -39,13 +39,14 @@ public class RPMod implements ModInitializer {
 
             return Command.SINGLE_SUCCESS;
         })
-            .then(literal("set_name")
-                .then(argument("name", string()).executes(context ->
-                    setRPName(context.getSource(), getString(context, "name")))))
-            .then(literal("get_name").executes(context ->
-                getRPName(context.getSource())))
-            .then(literal("clear_name").executes(context ->
-                clearRPName(context.getSource())))
+            .then(literal("name")
+                .then(literal("set")
+                    .then(argument("name", string()).executes(context ->
+                        setRPName(context.getSource(), getString(context, "name")))))
+                .then(literal("get").executes(context ->
+                    getRPName(context.getSource())))
+                .then(literal("clear").executes(context ->
+                    clearRPName(context.getSource()))))
             .then(literal("show_name_table").executes(context ->
                 showNameTable(context.getSource())))
             .then(literal("action")
