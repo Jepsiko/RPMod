@@ -20,6 +20,16 @@ public class RPMod implements ModInitializer {
     private static File file;
     private static Map<String, String> name_table;
 
+    private static final String help_text = """
+        /rp help : show this help
+        /rp [MESSAGE] : broadcast a message in roleplay mode
+        /rp action [ACTION] : broadcast an action in roleplay mode
+        /rp name set [NAME] : set your roleplaying name
+        /rp name get : show your current roleplaying name
+        /rp name clear : remove your roleplaying name
+        /rp show_name_table : show usernames and corresponding roleplaying names
+        """;
+
     @Override
     public void onInitialize() {
         file = new File("rpmod/name_table.txt");
@@ -34,11 +44,11 @@ public class RPMod implements ModInitializer {
         }
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-        dispatcher.register(literal("rp").executes(context -> {
-            context.getSource().sendMessage(Text.literal("Called /rp with no arguments"));
-
-            return Command.SINGLE_SUCCESS;
-        })
+        dispatcher.register(
+        literal("rp").executes(context ->
+            noArgs(context.getSource()))
+            .then(literal("help").executes(context ->
+                showHelp(context.getSource())))
             .then(literal("name")
                 .then(literal("set")
                     .then(argument("name", string()).executes(context ->
@@ -75,6 +85,18 @@ public class RPMod implements ModInitializer {
             writer.write(entry.getKey() + "-" + entry.getValue() + "\n");
         }
         writer.close();
+    }
+
+    public int noArgs(ServerCommandSource source) {
+        source.sendMessage(Text.literal("Called /rp with no arguments. Try /rp help."));
+
+        return Command.SINGLE_SUCCESS;
+    }
+
+    public int showHelp(ServerCommandSource source) {
+        source.sendMessage(Text.literal(help_text));
+
+        return Command.SINGLE_SUCCESS;
     }
 
     public int showNameTable(ServerCommandSource source) {
@@ -115,12 +137,17 @@ public class RPMod implements ModInitializer {
     }
 
     public int clearRPName(ServerCommandSource source) {
-        name_table.remove(source.getName());
-        source.sendMessage(Text.literal("Roleplaying name cleared"));
-        try {
-            exportNameTable();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (name_table.containsKey(source.getName())) {
+            name_table.remove(source.getName());
+            source.sendMessage(Text.literal("Roleplaying name cleared"));
+            try {
+                exportNameTable();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            source.sendMessage(Text.literal("Roleplaying name already cleared"));
         }
 
         return Command.SINGLE_SUCCESS;
